@@ -61,10 +61,6 @@ public class ZooKeeperChildrenCache implements Watcher, CacheUpdater<Set<String>
         cache.invalidateChildren(path);
     }
 
-    public void clearTree() {
-        cache.invalidateRoot(path);
-    }
-
     @Override
     public void reloadCache(final String path) {
         try {
