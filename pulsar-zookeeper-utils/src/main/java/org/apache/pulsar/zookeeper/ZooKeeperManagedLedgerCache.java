@@ -25,7 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Set;
-import java.util.concurrent.CompletableFuture;
 
 public class ZooKeeperManagedLedgerCache implements Watcher {
     private static final Logger LOG = LoggerFactory.getLogger(ZooKeeperManagedLedgerCache.class);
@@ -43,16 +42,12 @@ public class ZooKeeperManagedLedgerCache implements Watcher {
             LOG.debug("getChildren called at: {}", path);
         }
 
-        Set<String> children = cache.getChildrenAsync(path, this).join();
+        Set<String> children = cache.getChildren(path, this);
         if (children == null) {
             throw KeeperException.create(KeeperException.Code.NONODE);
         }
 
         return children;
-    }
-
-    public CompletableFuture<Set<String>> getAsync(String path) {
-        return cache.getChildrenAsync(path, this);
     }
 
     public void clearTree() {
